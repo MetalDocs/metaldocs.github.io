@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Environment Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Metal Documentation</h1>
+    
+        <nav>
+            <ul>
+                <li><a href="#Misc">Miscellaneous</a></li>
+                <li><a href="#crypt">Crypt</a></li>
+                <li><a href="#compressing/decompressing">Compressing/Decompressing</a></li>
+                <li><a href="#cache">Cache</a></li>
+                <li><a href="#Drawing">Drawing</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="Misc">
+            <h1>Miscellaneous</h1>
+            <div class="divider"></div>
+            <h3>identifyexecutor</h3>
+            
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function identifyexecutor(): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                if ({pcall(identifyexecutor)})[2] == "Metal" then
+                    print("Using Metal")
+                end
+                </code></pre>
+            </div>
+            <h3>identifyexecutor() returns a "name" and a "version" in the case "Metal" "V(Version here)"</h3>
+            <div class="divider"></div>
+            <h3>getrenv</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getrenv(): table
+                </code></pre>
+            </div>
+            <h3>getrenv() returns the Roblox Environment</h3>
+            <div class="divider"></div>
+            <h3>getgenv</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getgenv(): table
+                </code></pre>
+            </div>
+            <h3>getgenv() returns the Global Environment (similar to getfenv)</h3>
+            <div class="divider"></div>
+            <h3>Get Global Environment of a given Script</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getsenv(Script or ModuleScript): string
+                </code></pre>
+            </div>
+            <h3>getsenv() Returns the global environment of the given script. It can be used to access variables and functions that are not defined as local.</h3>
+            <div class="divider"></div>
+            <h3>getrenv</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getrenv(): table
+                </code></pre>
+            </div>
+            <h3>getrenv() returns the Roblox Environment</h3>
+            <div class="divider"></div>
+            <h3>getscripthash</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getscripthash(Script | LocalScript): string
+            --- Does not work well with Modulescripts atm
+                </code></pre>
+            </div>
+
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local animate = game:GetService("Players").LocalPlayer.Character.Animate
+                    local hash = getscripthash(animate)
+                    
+                    task.delay(1.5, function ()
+                        animate.Source = "print('Hello World!')"
+                    end)
+                    
+                    for i = 1, 5 do
+                        task.wait(0.5)
+                    
+                        local newHash = getscripthash(animate)
+                    
+                        if hash ~= newHash then
+                            print("The script has changed!")
+                            hash = newHash
+                        else
+                            print("The script has not changed.")
+                        end
+                    end
+                </code></pre>
+            </div>
+
+            <h3>getscripthash() Returns a SHA384 hash of the script.Source.</h3>
+            <div class="divider"></div>
+            <h3>getscriptbytecode</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getscriptbytecode(Script | LocalScript | Does not work on Modulescripts yet): string
+                </code></pre>
+            </div>
+            <h3>getscriptbytecode() Returns the LuaU bytecode of the given script.</h3>
+            <div class="divider"></div>
+            <h3>getloadedmodules</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getloadedmodules(): table
+                </code></pre>
+            </div>
+            <h3>getloadedmodules() Returns a table for all the loaded ModuleScripts in the Game.</h3>
+            <div class="divider"></div>
+            <h3>getscripts</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getscripts(): table
+                </code></pre>
+            </div>
+            <h3>getscripts() Returns a table for all the Scripts in the Game.</h3>
+            <div class="divider"></div>
+            <h3>getrunningscripts</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getrunningscripts(): table
+                </code></pre>
+            </div>
+            <h3>getrunningscripts() Returns a table for all the running Scripts in the Game.</h3>
+            <div class="divider"></div>
+            <h3>getinstances</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getinstances(): table
+                </code></pre>
+            </div>
+            <h3>getinstances() Returns a table for all the Instances in the Game.</h3>
+            <div class="divider"></div>
+            <h3>getnilinstances</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function getnilinstances(): table
+                </code></pre>
+            </div>
+            <h3>getnilinstances() Returns a table for all the NIL Instances in the Game.</h3>
+            <div class="divider"></div>
+            <h3>getgc</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                function getgc(includeTables: boolean?): {function | userdata | table}
+                </code></pre>
+            </div>
+            <h3>getgc() Returns a list of objects in the Luau garbage collector.</h3>
+            <div class="divider"></div>
+            <h3>isrbxactive</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function isrbxactive(): boolean
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                if isrbxactive() then
+                    print("true")
+                end
+                </code></pre>
+
+            </div>
+            <h3>fireclickdetector</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function fireclickdetector(object: ClickDetector, distance: number?, event: string?): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local clickDetector = workspace.Door.Button.ClickDetector
+                    fireclickdetector(clickDetector, 10 + math.random(), "MouseClick")
+                </code></pre>
+            </div>
+            <h3>fireclickdetector() Dispatches a click or hover event to the given ClickDetector. When absent, distance defaults to zero, and event defaults to "MouseClick".
+            Possible input events include 'MouseClick', 'RightMouseClick', 'MouseHoverEnter', and 'MouseHoverLeave'</h3>
+            <div class="divider"></div>
+            
+        </section>
+        <section id="crypt">
+            <h2>Crypt Library</h2>
+            <h3>The crypt library provides methods for the encryption and decryption of string data.</h3>
+            <div class="divider"></div>
+            <h3>crypt.base64encode</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function crypt.base64encode(data: string): string
+                    function crypt.base64_encode(data: string): string
+                    function base64.encode(data: string): string
+                    function base64_encode(data: string): string
+                    --- different aliases of crypt.base64encode
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local base64 = crypt.base64encode("Hello, World!")
+                    local raw = crypt.base64decode(base64)
+                    
+                    print(base64) --- should print SGVsbG8sIFdvcmxkIQ==
+                    print(raw) --- should print Hello, World!
+                </code></pre>
+            </div>
+            <h4>Encrypts an unencoded string using AES encryption. Returns the base64 encoded and encrypted string, and the IV.</h4>
+            <div class="divider"></div>
+            <h3>crypt.base64decode</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function crypt.base64decode(data: string): string
+                    function crypt.base64_decode(data: string): string
+                    function base64.decode(data: string): string
+                    function base64_decode(data: string): string
+                    --- different aliases of crypt.base64decode
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local base64 = crypt.base64encode("Hello, World!")
+                    local raw = crypt.base64decode(base64)
+                    
+                    print(base64) --- should print SGVsbG8sIFdvcmxkIQ==
+                    print(raw) --- should print Hello, World!
+                </code></pre>
+            </div>
+            <div class="divider"></div>
+            <h3>crypt.encrypt</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function crypt.encrypt(data: string, key: string, iv: string?, mode: string?): (string, string)
+                </code></pre>
+            </div>
+            <div class="divider"></div>
+            <h3>crypt.decrypt</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function crypt.decrypt(data: string, key: string, iv: string?, mode: string?): (string, string)
+                </code></pre>
+            </div>
+            <h4>Decrypts the base64 encoded and encrypted content. Returns the raw string.</h4>
+            <div class="divider"></div>
+            <h3>crypt.generatebytes</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function crypt.generatebytes(size: number): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local bytes = crypt.generatebytes(16)
+                    print(bytes) --- should print bXlzcWwgYm9vbGVhbnM=
+                    print(#crypt.base64decode(bytes)) --- should print 16
+                </code></pre>
+            </div>
+            <h4>Generates a random sequence of bytes of the given size. Returns the sequence as a base64 encoded string.</h4>
+            <div class="divider"></div>
+            <h3>crypt.hash</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function crypt.hash(data: string, algorithm: string): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local hash = crypt.hash("Hello, World!", "md5")
+                    print(hash) --- Should print bb5efd2e9af3cbc4adfea2a3176f8d55
+                </code></pre>
+            </div>
+            <h4>Returns the result of hashing the data using the given algorithm.</h4>
+            <h4>Supported algorithms include 'sha1', 'sha384', 'md5' (rest return "undefined")</h4>
+        </section>
+        <section id="compressing/decompressing">
+            <h2>Compressing/Decompressing with LZ4</h2>
+            <h3>The LZ4 library allows you to compress / decompress data using LZ4</h3>
+            <div class="divider"></div>
+            <h3>lz4compress</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function lz4compress(data: string): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local text = "Hello, world! Hello, world! Goodbye, world!"
+                    print(#text) prints 43
+                    print(#lz4compress(text)) prints 34
+                </code></pre>
+            </div>
+            <h4>Compresses data using LZ4 compression.</h4>
+            <div class="divider"></div>
+            <h3>lz4compress</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function lz4decompress(data: string): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local text = "Hello, world! Hello, world!"
+                    local compressed = lz4compress(text)
+                    print(lz4decompress(compressed, #text)) --> "Hello, world! Hello, world!"
+                </code></pre>
+            </div>
+            <h4>Decompresses data using LZ4 compression, with the decompressed size specified by size.</h4>
+            <div class="divider"></div>
+        </section>
+        <section id="cache">
+            <h2>Cache Library</h2>
+            <h3>The cache library provides methods for modifying the internal Instance cache. Note that some of the methods are only available as global functions. They will be tagged with Global</h3>
+            <div class="divider"></div>
+            <h3>cache.invalidate</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function invalidate(object: Instance): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                local Lighting = game:GetService("Lighting")
+                cache.invalidate(game:GetService("Lighting"))
+                print(Lighting, Lighting == game:GetService("Lighting")) --> Lighting, false
+                </code></pre>
+            </div>
+            <h3>Deletes object from the Instance cache. Effectively invalidates object as a reference to the underlying Instance.</h3>
+            <div class="divider"></div>
+            <h3>cache.iscached</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function iscached(object: Instance): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                local Lighting = game:GetService("Lighting")
+                cache.invalidate(Lighting)
+                print(cache.iscached(Lighting)) --> false
+                </code></pre>
+            </div>
+            <h3>Checks whether object exists in the Instance cache.</h3>
+            <div class="divider"></div>
+            <h3>cloneref</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                function cloneref(object: Instance): Instance
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                local Lighting = game:GetService("Lighting")
+                local LightingClone = cloneref(Lighting)
+                    
+                print(Lighting == LightingClone) --> false
+                </code></pre>
+            </div>
+            <h3>Returns a copy of the Instance reference to object. This is useful for managing an Instance without directly referencing it.</h3>
+            <div class="divider"></div>
+            <h3>cache.iscached</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function iscached(object: Instance): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local Lighting = game:GetService("Lighting")
+                    cache.invalidate(Lighting)
+                    print(cache.iscached(Lighting)) --> false
+                </code></pre>
+            </div>
+            <h3>Replaces object in the Instance cache with newObject.</h3>
+            <div class="divider"></div>
+        </section>
+        <section id="Drawing">
+            <h2>Drawing Library</h2>
+            
+            <div class="divider"></div>
+            <h3>Drawing.new</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function Drawing.new(type: string): Drawing
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local circle = Drawing.new("Circle")
+                    circle.Radius = 50
+                    circle.Color = Color3.fromRGB(255, 0, 0)
+                    circle.Filled = true
+                    circle.NumSides = 32
+                    circle.Position = Vector2.new(300, 300)
+                    circle.Transparency = 0.7
+                    circle.Visible = true
+                    
+                    task.wait(1)
+                    circle:Destroy()
+                </code></pre>
+            </div>
+            <h3>Create a new drawing object of the specified type. The possible types are 'Line', 'Text', 'Image', 'Circle', 'Square', 'Quad', and 'Triangle'.</h3>
+            <div class="divider"></div>
+            <h3>Drawing.Fonts</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    Drawing.Fonts: {
+                        UI: 0,
+                        System: 1,
+                        Plex: 2,
+                        Monospace: 3,
+                    }
+                </code></pre>
+                <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    for name, font in pairs(Drawing.Fonts) do
+                    local text = Drawing.new("Text")
+                    text.Text = "The quick brown fox (" .. name .. ")"
+                    text.Font = font
+                    text.Size = 48
+                    text.Position = Vector2.new(150, 100 + font * 50)
+                    text.Visible = true
+                    task.delay(2, function ()
+                        text:Destroy()
+                    end)
+                end
+                </code></pre>
+                <h3>Drawing</h3>
+                <h4>[💻 Class]</h4>
+                <div class="divider"></div>
+                <h3>BaseDrawing</h3>
+                <p>The base class of which all drawing objects inherit. Cannot be instantiated.</p>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>Visible | boolean | Whether the drawing is visible.</h4>
+                <div class="divider"></div>
+                <h4>ZIndex | number | Dictates which drawing display over others</h4>
+                <div class="divider"></div>
+                <h4>Transparency | number | Controls opacity of the drawing.</h4>
+                <div class="divider"></div>
+                <h4>Color | Color3 | Dictates what color the drawing displays over</h4>
+                <div class="divider"></div>
+                <h4>Destroy() | function | Destroying the drawing</h4>
+                <div class="divider"></div>
+                <h3>Line</h3>
+                <h4>Renders a line starting at From and ending at To.</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>From | Vector2 | The starting point of the line.</h4>
+                <div class="divider"></div>
+                <h4>To | Vector2 | The ending point of the line.</h4>
+                <div class="divider"></div>
+                <h4>Thickness | number | The thickness of the line.</h4>
+                <div class="divider"></div>
+                <h3>Text</h3>
+                <h4>Renders text at Position</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>Text | string | The text to render in the drawing.</h4>
+                <div class="divider"></div>
+                <h4>TextBounds | 🔒 Vector2 | The font to use.</h4>
+                <div class="divider"></div>
+                <h4>Font | Drawing.Font | The thickness of the line.</h4>
+                <div class="divider"></div>
+                <h4>Size | number | The size of the text.</h4>
+                <div class="divider"></div>
+                <h4>Position | Vector2 | The position of the text.</h4>
+                <div class="divider"></div>
+                <h4>Center | boolean | Whether the text should be centered horizontally.</h4>
+                <div class="divider"></div>
+                <h4>Outline | boolean | Whether the text should be outlined.</h4>
+                <div class="divider"></div>
+                <h4>OutlineColor | Color3 | The color of the outline.</h4>
+                <div class="divider"></div>
+                <h3>Image</h3>
+                <h4>Draws the image data to the screen. Data must be the raw image data.</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>Data | string | The image data.</h4>
+                <div class="divider"></div>
+                <h4>Size | Vector2 | The size of the image.</h4>
+                <div class="divider"></div>
+                <h4>Position | Vector2 | Where the image is rendered</h4>
+                <div class="divider"></div>
+                <h4>Rounding | number | The roundness of the image rendered</h4>
+                <div class="divider"></div>
+                <h3>Circle</h3>
+                <h4>Draws a circle that is centered at Position</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>NumSides | number | The number of sides of the circle.</h4>
+                <div class="divider"></div>
+                <h4>Radius | number | The radius of the circle.</h4>
+                <div class="divider"></div>
+                <h4>Position | Vector2 | The position of the center of the circle.</h4>
+                <div class="divider"></div>
+                <h4>Thickness | number | If Filled is false, specifies the thickness of the outline.</h4>
+                <div class="divider"></div>
+                <h4>Filled | boolean | Whether the circle should be filled.</h4>
+                <div class="divider"></div>
+                <h3>Square</h3>
+                <h4>Draws a circle that is centered at Position</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>Size | Vector2 | Dicates the size of the square</h4>
+                <div class="divider"></div>
+                <h4>Position | Vector2 | Dicates the position of the square</h4>
+                <div class="divider"></div>
+                <h4>Thickness | number | If Filled is false, specifies the thickness of the outline.</h4>
+                <div class="divider"></div>
+                <h4>Filled | boolean | Whether the square should be filled.</h4>
+                <div class="divider"></div>
+                <h3>Quad</h3>
+                <h4>Draws a four-sided figure connecting to each of the four points.</h4>
+                <div class="divider"></div>
+                <h3>Property | Type | Description</h3>
+                <div class="divider"></div>
+                <h4>PointA | Vector2 | The first point.</h4>
+                <div class="divider"></div>
+                <h4>PointB | Vector2 | The second point.</h4>
+                <div class="divider"></div>
+                <h4>PointC | Vector2 | The third point.</h4>
+                <div class="divider"></div>
+                <h4>PointD | Vector2 | The fourth point.</h4>
+                <div class="divider"></div>
+                <h4>Thickness | number | If Filled is false, specifies the thickness of the outline.</h4>
+                <div class="divider"></div>
+                <h4>Filled | boolean | Whether the quad should be filled.</h4>
+                <div class="divider"></div>
+            </div>
+            </div>
+        </section>
+        <section id="File System">
+            <h2>Metal's File System API</h2>
+            <h3>The filesystem functions allow read and write access to a designated folder in the workspace of the Metal</h3>
+            <div class="divider"></div>
+            <h3>readfile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function readfile(path: string): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("file.txt", "Hello, world!")
+                print(readfile("file.txt")) --> Hello, world!
+                </code></pre>
+            </div>
+            <h3>Returns the contents of the file located at path.</h3>
+            <div class="divider"></div>
+            <h3>listfiles</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function listfiles(path: string): string
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                local function descend(path, level)
+                level = level or 0
+                for _, file in ipairs(listfiles(path)) do
+                        print(string.rep("  ", level) .. file)
+                        if isfolder(file) then
+                            descend(file, level + 1)
+                    end
+                end
+            end
+                
+            descend(".")
+                </code></pre>
+            </div>
+            <h3>Returns a list of files and folders in the folder located at path. The returned list contains whole paths.</h3>
+            
+            <div class="divider"></div>
+            <h3>writefile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function writefile(path: string, data: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("file.txt", "Hello, world!")
+                print(readfile("file.txt")) --> Hello, world!
+                </code></pre>
+            </div>
+            <h3>Writes data to the file located at path if it is not a folder.</h3>
+            
+            <div class="divider"></div>
+            <h3>makefolder</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function makefolder(path: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                makefolder("folder")
+                writefile("folder/file.txt", "Hello, world!")
+                print(readfile("folder/file.txt")) --> Hello, world!
+                </code></pre>
+            </div>
+            <h3>Creates a folder at path if it does not already exist.</h3>
+            
+            <div class="divider"></div>
+            <h3>appendfile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function appendfile(path: string, data: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("services.txt", "A list of services:\n")
+
+                for _, service in ipairs(game:GetChildren()) do
+                    if service.ClassName ~= "" then
+                        appendfile("services.txt", service.ClassName .. "\n")
+                    end
+                end
+                </code></pre>
+            </div>
+            <h3>Appends data to the end of the file located at path. Creates the file if it does not exist.</h3>
+            
+            <div class="divider"></div>
+            <h3>isfile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function isfile(path: string): boolean
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("file.txt", "Hello, world!")
+                print(isfile("file.txt")) --> true
+                </code></pre>
+            </div>
+            <h3>Returns whether or not path points to a file.</h3>
+            
+            <div class="divider"></div>
+            <h3>isfolder</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function isfolder(path: string): boolean
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                makefolder("folder")
+                print(isfolder("folder")) --> true
+                </code></pre>
+            </div>
+            <h3>Returns whether or not path points to a folder.</h3>
+            
+            <div class="divider"></div>
+            <h3>delfile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function delfile(path: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("file.txt", "Hello, world!")
+                print(isfile("file.txt")) --> true
+                    
+                delfile("file.txt")
+                print(isfile("file.txt")) --> false
+                </code></pre>
+            </div>
+            <h3>Removes the file located at path.</h3>
+            
+            <div class="divider"></div>
+            <h3>delfolder</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function delfolder(path: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                makefolder("folder")
+                print(isfolder("folder")) --> true
+                    
+                delfolder("folder")
+                print(isfolder("folder")) --> false
+                </code></pre>
+            </div>
+            <h3>Removes the folder located at path.</h3>
+            
+            <div class="divider"></div>
+            <h3>loadfile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function loadfile(path: string, chunkname: string?): (function?, string?)
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("file.lua", "local number = ...; return number + 1")
+                local func, err = loadfile("file.lua")
+                local output = assert(func, err)(1)
+                print(output) --> 2
+                </code></pre>
+            </div>
+            <h3>Generates a chunk from the file located at path. The environment of the returned function is the global environment.</h3>
+
+            <h3>If there are no compilation errors, the chunk is returned by itself; otherwise, it returns nil plus the error message.</h3>
+                
+            <h3>chunkname is used as the chunk name for error messages and debug information. When absent, it defaults to a random string.</h3>
+            
+            <div class="divider"></div>
+            <h3>dofile</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            function dofile(path: string): ()
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                writefile("code.lua", "print('Hello, world!')")
+                dofile("code.lua") --> "Hello, world!"
+                </code></pre>
+            </div>
+            <h3>Attempts to load the file located at path and execute it on a new thread.</h3>
+            <div class="divider"></div>
+            <h3>Metal ENV Documentation</h3>
+        </section>
+        
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 Metal</p>
+    </footer>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-lua.min.js"></script>
+</body>
+</html>
