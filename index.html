@@ -812,7 +812,54 @@
             <div class="divider"></div>
             <h3>Metal ENV Documentation</h3>
         </section>
-        
+        <section id="Deprecated">
+            <h2>Deprecated</h2>
+            <h3>These existed before UNC functions were created</h3>
+            <div class="divider"></div>
+            <h3> ⚠️ syn</h3>
+            <h5>WARNING this is completely deprecated and replaced by UNC functions</h5>
+            <h4>Caller Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                syn : boolean or nil
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                if not syn then
+                    print'Not Using Synapse X'
+                else
+                    print'Using Synapse X'
+                end
+                </code></pre>
+            </div>
+            <h3>Was originally used to detect if a user was using Synapse X before UNC functions existed</h3>
+            <h4>Added to Metal purely for older "Synapse X Only" script support</h4>
+            <div class="divider"></div>
+            <h3> ⚠️ PROTOSMASHER_LOADED</h3>
+            <h5>WARNING this is completely deprecated and replaced by UNC functions</h5>
+            <h4>Caller Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+            PROTOSMASHER_LOADED : boolean or nil
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                if not PROTOSMASHER_LOADED then
+                    print'Not Using ProtoSmasher'
+                else
+                    print'Using ProtoSmasher'
+                end
+                </code></pre>
+            </div>
+            <h3>Was originally used to detect if a user was using ProtoSmasher before UNC functions existed</h3>
+            <h4>Added to Metal purely for older script support since ProtoSmasher has been long dead</h4>
+            <div class="divider"></div>
+            <h3>Metal ENV Documentation</h3>
+        </section>
         
     </main>
     <footer>
