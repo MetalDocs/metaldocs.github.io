@@ -827,7 +827,7 @@
             <h4>Usage:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                    local GUI = game:GetObjects("whatever")[1]
+                    local GUI = Instance.new("ScreenGui")
                     syn.protect_gui(GUI) -- Its preferable to call protect_gui before your GUI is parented, but it is not required.
                     GUI.Parent = game:GetService("CoreGui")
                 </code></pre>
@@ -840,14 +840,6 @@
             <div class="code-block">
                 <pre><code class="language-lua">
                     function syn.unprotect_gui(instance : (gui))
-                </code></pre>
-            </div>
-            <h4>Usage:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-                    local GUI = game:GetObjects("whatever")[1]
-                    syn.protect_gui(GUI) -- Its preferable to call protect_gui before your GUI is parented, but it is not required.
-                    GUI.Parent = game:GetService("CoreGui")
                 </code></pre>
             </div>
             <h3>Removes protection for the GUI inputted and errors if gui is not already protected</h3>
