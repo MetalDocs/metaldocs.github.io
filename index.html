@@ -811,30 +811,52 @@
             <h3>Attempts to load the file located at path and execute it on a new thread.</h3>
             <div class="divider"></div>
         </section>
-        <section id="Deprecated">
-            <h2>Deprecated</h2>
-            <h3>These existed before UNC functions were created</h3>
+        <section id="syn">
             <div class="divider"></div>
-            <h3> ⚠️ syn</h3>
-            <h5>WARNING this is completely deprecated and replaced by UNC functions</h5>
-            <h4>Caller Definition:</h4>
+            <h1>syn</h1>
+            <h2>Typically used as external security for scripts</h2>
+            <h3>Was originally created ONLY for Synapse X but was later used by almost all exploits</h3>
+            div class="divider"></div>
+            <h3>syn.protect_gui</h3>
+            <h4>Function Definition:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                syn : table
+                    function syn.protect_gui(instance : (gui))
                 </code></pre>
             </div>
             <h4>Usage:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                if not syn then
-                    print'Not Using Synapse X'
-                else
-                    print'Using Synapse X'
-                end
+                    local GUI = game:GetObjects("whatever")[1]
+                    syn.protect_gui(GUI) -- Its preferable to call protect_gui before your GUI is parented, but it is not required.
+                    GUI.Parent = game:GetService("CoreGui")
                 </code></pre>
             </div>
-            <h3>Was originally used to detect if a user was using Synapse X before UNC functions existed</h3>
-            <h4>Added to Metal purely for older "Synapse X Only" script support</h4>
+            <h3>Protects your gui from recursive FindFirstChild-style attacks. After you call the function, recursive FFA calls from any other contexts OTHER than your exploit will skip over your protected instances & all children of such instances.</h3>
+            <h4>⚠️ Metal's implementation of this may not fully work how it did in Synapse X</h4>
+            div class="divider"></div>
+            <h3>syn.unprotect_gui</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function syn.unprotect_gui(instance : (gui))
+                </code></pre>
+            </div>
+            <h4>Usage:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    local GUI = game:GetObjects("whatever")[1]
+                    syn.protect_gui(GUI) -- Its preferable to call protect_gui before your GUI is parented, but it is not required.
+                    GUI.Parent = game:GetService("CoreGui")
+                </code></pre>
+            </div>
+            <h3>Removes protection for the GUI inputted and errors if gui is not already protected</h3>
+            <h4>⚠️ Metal's implementation of this may not fully work how it did in Synapse X</h4>
+            div class="divider"></div>
+        </section>
+        <section id="Deprecated">
+            <h2>Deprecated</h2>
+            <h3>These existed before UNC functions were created</h3>
             <div class="divider"></div>
             <h3> ⚠️ PROTOSMASHER_LOADED</h3>
             <h5>WARNING this is completely deprecated and replaced by UNC functions</h5>
