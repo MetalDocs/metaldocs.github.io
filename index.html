@@ -18,6 +18,7 @@
                 <li><a href="#compressing/decompressing">Compressing/Decompressing</a></li>
                 <li><a href="#cache">Cache</a></li>
                 <li><a href="#Drawing">Drawing</a></li>
+                <li><a href="#syn">Drawing</a></li>
                 <li><a href="#Deprecated">Deprecated</a></li>
             </ul>
         </nav>
@@ -358,39 +359,25 @@
             <h2>Cache Library</h2>
             <h3>The cache library provides methods for modifying the internal Instance cache. Note that some of the methods are only available as global functions. They will be tagged with Global</h3>
             <div class="divider"></div>
-            <h3>cache.invalidate</h3>
+            <h3>cache.replace</h3>
             <h4>Function Definition:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-            function invalidate(object: Instance): ()
+            function replace(object: Instance, newObject: Instance): ()
                 </code></pre>
             </div>
             <h4>Usage:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                local Lighting = game:GetService("Lighting")
-                cache.invalidate(game:GetService("Lighting"))
-                print(Lighting, Lighting == game:GetService("Lighting")) --> Lighting, false
+                    local Lighting = game:GetService("Lighting")
+                    local Players = game:GetService("Players")
+                    
+                    cache.replace(Lighting, Players)
+                    
+                    print(Lighting) --> Players
                 </code></pre>
             </div>
-            <h3>Deletes object from the Instance cache. Effectively invalidates object as a reference to the underlying Instance.</h3>
-            <div class="divider"></div>
-            <h3>cache.iscached</h3>
-            <h4>Function Definition:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-            function iscached(object: Instance): ()
-                </code></pre>
-            </div>
-            <h4>Usage:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-                local Lighting = game:GetService("Lighting")
-                cache.invalidate(Lighting)
-                print(cache.iscached(Lighting)) --> false
-                </code></pre>
-            </div>
-            <h3>Checks whether object exists in the Instance cache.</h3>
+            <h3>Replaces object in the Instance cache with newObject.</h3>
             <div class="divider"></div>
             <h3>cloneref</h3>
             <h4>Function Definition:</h4>
@@ -410,27 +397,9 @@
             </div>
             <h3>Returns a copy of the Instance reference to object. This is useful for managing an Instance without directly referencing it.</h3>
             <div class="divider"></div>
-            <h3>cache.iscached</h3>
-            <h4>Function Definition:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-            function iscached(object: Instance): ()
-                </code></pre>
-            </div>
-            <h4>Usage:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-                    local Lighting = game:GetService("Lighting")
-                    cache.invalidate(Lighting)
-                    print(cache.iscached(Lighting)) --> false
-                </code></pre>
-            </div>
-            <h3>Replaces object in the Instance cache with newObject.</h3>
-            <div class="divider"></div>
         </section>
         <section id="Drawing">
             <h2>Drawing Library</h2>
-            
             <div class="divider"></div>
             <h3>Drawing.new</h3>
             <h4>Function Definition:</h4>
@@ -817,33 +786,41 @@
             <h2>Typically used as external security for scripts</h2>
             <h3>Was originally created ONLY for Synapse X but was later used by almost all exploits</h3>
             <div class="divider"></div>
-            <h3>syn.protect_gui</h3>
+            <h3>syn.crypt</h3>
             <h4>Function Definition:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                    function syn.protect_gui(instance : (gui))
+                    table syn.crypt
                 </code></pre>
             </div>
-            <h4>Usage:</h4>
-            <div class="code-block">
-                <pre><code class="language-lua">
-                    local GUI = game:GetObjects("whatever")[1]
-                    syn.protect_gui(GUI) -- Its preferable to call protect_gui before your GUI is parented, but it is not required.
-                    GUI.Parent = game:GetService("CoreGui")
-                </code></pre>
-            </div>
-            <h3>Protects your gui from recursive FindFirstChild-style attacks. After you call the function, recursive FFA calls from any other contexts OTHER than your exploit will skip over your protected instances & all children of such instances.</h3>
-            <h4>⚠️ Metal's implementation of this may not fully work how it did in Synapse X</h4>
+            <h3>Alias for crypt</h3>
             <div class="divider"></div>
-            <h3>syn.unprotect_gui</h3>
+            <h3>syn.get_thread_identity</h3>
             <h4>Function Definition:</h4>
             <div class="code-block">
                 <pre><code class="language-lua">
-                    function syn.unprotect_gui(instance : (gui))
+                    function syn.get_thread_identity()
                 </code></pre>
             </div>
-            <h3>Removes protection for the GUI inputted and errors if gui is not already protected</h3>
-            <h4>⚠️ Metal's implementation of this may not fully work how it did in Synapse X</h4>
+            <h3>Returns the current thread identity. Another alias for getthreadidentity</h3>
+            <div class="divider"></div>
+            <h3>syn.cache_replace</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function syn.cache_replace(instance: Instance, newObject: newInstance)
+                </code></pre>
+            </div>
+            <h3>Replaces object in the instance cache with newObject. Another alias for cache.replace</h3>
+            div class="divider"></div>
+            <h3>syn.is_beta</h3>
+            <h4>Function Definition:</h4>
+            <div class="code-block">
+                <pre><code class="language-lua">
+                    function syn.is_beta()
+                </code></pre>
+            </div>
+            <h3>Returns a bool indicating whether the user is using Metal Beta or not. (Used in Synapse to indicate if you have Synapse Beta or not)</h3>
             <div class="divider"></div>
         </section>
         <section id="Deprecated">
